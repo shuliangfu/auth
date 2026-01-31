@@ -1,0 +1,24 @@
+# 依赖
+node_modules/
+.npm/
+
+# 构建产物
+dist/
+build/
+*.tsbuildinfo
+
+# 测试数据
+tests/data/
+
+# 缓存
+.cache/
+*.log
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
