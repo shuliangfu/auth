@@ -169,6 +169,7 @@ export class MemoryTokenStore implements TokenStore {
    * 保存 Refresh Token
    */
   async save(tokenId: string, data: RefreshTokenData): Promise<void> {
+    await Promise.resolve();
     this.tokens.set(tokenId, data);
   }
 
@@ -176,6 +177,7 @@ export class MemoryTokenStore implements TokenStore {
    * 获取 Refresh Token 数据
    */
   async get(tokenId: string): Promise<RefreshTokenData | null> {
+    await Promise.resolve();
     const data = this.tokens.get(tokenId);
     if (!data) return null;
 
@@ -192,6 +194,7 @@ export class MemoryTokenStore implements TokenStore {
    * 删除 Refresh Token
    */
   async delete(tokenId: string): Promise<void> {
+    await Promise.resolve();
     this.tokens.delete(tokenId);
   }
 
@@ -199,6 +202,7 @@ export class MemoryTokenStore implements TokenStore {
    * 删除用户的所有 Refresh Token
    */
   async deleteByUser(userId: string): Promise<void> {
+    await Promise.resolve();
     for (const [tokenId, data] of this.tokens.entries()) {
       if (data.userId === userId) {
         this.tokens.delete(tokenId);

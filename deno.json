@@ -11,7 +11,7 @@
   "imports": {
     "@dreamer/test": "jsr:@dreamer/test@^1.0.0-beta.40",
     "@dreamer/crypto": "jsr:@dreamer/crypto@^1.0.0-beta.2",
-    "@dreamer/session": "jsr:@dreamer/session@^1.0.0-beta.2"
+    "@dreamer/session": "jsr:@dreamer/session@1.0.0-beta.3"
   },
   "tasks": {
     "test": "deno test -A tests/",
