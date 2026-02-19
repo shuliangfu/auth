@@ -1,0 +1,25 @@
+{
+  "auth": {
+    "jwt": {
+      "secretTooShort": "密钥长度不足: 需要至少 {min} 字符，当前 {current} 字符。请使用更强的密钥以确保安全性。",
+      "algorithmNotAllowed": "JWT 算法不在允许列表中: {alg}，允许的算法: {allowed}",
+      "issuerMismatch": "JWT 签发者不匹配",
+      "audienceMismatch": "JWT 受众不匹配"
+    },
+    "refresh": {
+      "invalidTimeFormat": "无效的时间格式: {timeStr}",
+      "unsupportedTimeUnit": "不支持的时间单位: {unit}",
+      "invalidRefreshToken": "无效的 Refresh Token",
+      "invalidTokenType": "无效的 Token 类型",
+      "refreshTokenMissingId": "无效的 Refresh Token: 缺少 Token ID",
+      "refreshTokenExpiredOrMissing": "Refresh Token 已过期或不存在",
+      "refreshTokenRevoked": "Refresh Token 已被撤销"
+    },
+    "oauth": {
+      "tokenExchangeFailed": "Token 交换失败: {error}",
+      "tokenRefreshFailed": "Token 刷新失败: {error}",
+      "userInfoEndpointNotConfigured": "未配置用户信息端点",
+      "getUserInfoFailed": "获取用户信息失败: {error}"
+    }
+  }
+}

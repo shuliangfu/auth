@@ -2,14 +2,14 @@
  * @fileoverview Session 认证模块测试
  */
 
-import { describe, it, expect, beforeEach } from "@dreamer/test";
+import { beforeEach, describe, expect, it } from "@dreamer/test";
 import {
-  AuthSessionManager,
-  createAuthSession,
-  type SessionStore,
   type AuthSessionData,
-  type HttpContext,
+  AuthSessionManager,
   type CookieOptions,
+  createAuthSession,
+  type HttpContext,
+  type SessionStore,
 } from "../src/session.ts";
 import type { AuthUser } from "../src/mod.ts";
 
@@ -23,24 +23,31 @@ import type { AuthUser } from "../src/mod.ts";
 class MemorySessionStore implements SessionStore {
   private sessions: Map<string, AuthSessionData> = new Map();
 
-  async get(sessionId: string): Promise<AuthSessionData | null> {
-    return this.sessions.get(sessionId) || null;
+  get(sessionId: string): Promise<AuthSessionData | null> {
+    return Promise.resolve(this.sessions.get(sessionId) || null);
   }
 
-  async set(sessionId: string, data: AuthSessionData, _maxAge: number): Promise<void> {
+  set(
+    sessionId: string,
+    data: AuthSessionData,
+    _maxAge: number,
+  ): Promise<void> {
     this.sessions.set(sessionId, data);
+    return Promise.resolve();
   }
 
-  async delete(sessionId: string): Promise<void> {
+  delete(sessionId: string): Promise<void> {
     this.sessions.delete(sessionId);
+    return Promise.resolve();
   }
 
-  async has(sessionId: string): Promise<boolean> {
-    return this.sessions.has(sessionId);
+  has(sessionId: string): Promise<boolean> {
+    return Promise.resolve(this.sessions.has(sessionId));
   }
 
-  async clear(): Promise<void> {
+  clear(): Promise<void> {
     this.sessions.clear();
+    return Promise.resolve();
   }
 
   // 测试辅助方法
@@ -266,7 +273,9 @@ describe("AuthSessionManager - Session 管理器", () => {
       ctx2._cookies.set("testSessionId", sessionId);
       await authSession.loadSession(ctx2);
 
-      expect(ctx2.session!.lastActiveAt).toBeGreaterThanOrEqual(originalLastActive!);
+      expect(ctx2.session!.lastActiveAt).toBeGreaterThanOrEqual(
+        originalLastActive!,
+      );
     });
   });
 
@@ -284,8 +293,9 @@ describe("AuthSessionManager - Session 管理器", () => {
 
       let nextCalled = false;
       const middleware = authSession.middleware();
-      await middleware(ctx2, async () => {
+      await middleware(ctx2, () => {
         nextCalled = true;
+        return Promise.resolve();
       });
 
       expect(nextCalled).toBe(true);
@@ -298,8 +308,9 @@ describe("AuthSessionManager - Session 管理器", () => {
 
       let nextCalled = false;
       const middleware = authSession.middleware();
-      await middleware(ctx, async () => {
+      await middleware(ctx, () => {
         nextCalled = true;
+        return Promise.resolve();
       });
 
       expect(nextCalled).toBe(true);
@@ -315,8 +326,9 @@ describe("AuthSessionManager - Session 管理器", () => {
 
       let nextCalled = false;
       const middleware = authSession.requireAuth();
-      const result = await middleware(ctx, async () => {
+      const result = await middleware(ctx, () => {
         nextCalled = true;
+        return Promise.resolve();
       });
 
       expect(nextCalled).toBe(true);
@@ -328,8 +340,9 @@ describe("AuthSessionManager - Session 管理器", () => {
 
       let nextCalled = false;
       const middleware = authSession.requireAuth();
-      const result = await middleware(ctx, async () => {
+      const result = await middleware(ctx, () => {
         nextCalled = true;
+        return Promise.resolve();
       });
 
       expect(nextCalled).toBe(false);
@@ -343,8 +356,9 @@ describe("AuthSessionManager - Session 管理器", () => {
       let nextCalled = false;
       // Response.redirect 需要完整 URL
       const middleware = authSession.requireAuth("http://localhost/login");
-      const result = await middleware(ctx, async () => {
+      const result = await middleware(ctx, () => {
         nextCalled = true;
+        return Promise.resolve();
       });
 
       expect(nextCalled).toBe(false);
@@ -410,10 +424,8 @@ describe("用户序列化", () => {
     const authSession = new AuthSessionManager({
       store,
       serializeUser: (user) => ({ id: user.id }),
-      deserializeUser: async (user) => {
-        // 从"数据库"获取完整用户信息
-        return userDb[user.id as string] || null;
-      },
+      deserializeUser: (user) =>
+        Promise.resolve(userDb[user.id as string] || null),
     });
 
     const ctx1 = createMockContext();
@@ -434,7 +446,7 @@ describe("用户序列化", () => {
     const store = new MemorySessionStore();
     const authSession = new AuthSessionManager({
       store,
-      deserializeUser: async (_user) => null, // 用户不存在
+      deserializeUser: (_user) => Promise.resolve(null), // 用户不存在
     });
 
     const ctx1 = createMockContext();

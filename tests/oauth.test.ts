@@ -2,23 +2,23 @@
  * @fileoverview OAuth2 模块测试
  */
 
-import { describe, it, expect } from "@dreamer/test";
+import { describe, expect, it } from "@dreamer/test";
 import {
-  OAuth2Client,
-  generatePKCE,
-  generateState,
-  createOAuth2Client,
   createGitHubClient,
   createGoogleClient,
-  GitHubProvider,
-  GoogleProvider,
-  WeChatProvider,
-  GitLabProvider,
+  createOAuth2Client,
+  generatePKCE,
+  generateState,
   GiteeProvider,
-  parseGitHubUser,
-  parseGoogleUser,
-  parseGitLabUser,
+  GitHubProvider,
+  GitLabProvider,
+  GoogleProvider,
+  OAuth2Client,
   parseGiteeUser,
+  parseGitHubUser,
+  parseGitLabUser,
+  parseGoogleUser,
+  WeChatProvider,
 } from "../src/oauth.ts";
 
 describe("generatePKCE - PKCE 参数生成", () => {
@@ -78,7 +78,9 @@ describe("OAuth2Client - 客户端", () => {
 
     expect(authUrl).toContain(testConfig.authorizationEndpoint);
     expect(authUrl).toContain(`client_id=${testConfig.clientId}`);
-    expect(authUrl).toContain(`redirect_uri=${encodeURIComponent(testConfig.redirectUri)}`);
+    expect(authUrl).toContain(
+      `redirect_uri=${encodeURIComponent(testConfig.redirectUri)}`,
+    );
     expect(authUrl).toContain("response_type=code");
     // URLSearchParams 使用 + 代替空格
     expect(authUrl).toContain("scope=read+write");
@@ -128,39 +130,39 @@ describe("OAuth2Client - 客户端", () => {
 describe("内置 Provider 配置", () => {
   it("GitHub Provider 应该有正确的端点", () => {
     expect(GitHubProvider.authorizationEndpoint).toBe(
-      "https://github.com/login/oauth/authorize"
+      "https://github.com/login/oauth/authorize",
     );
     expect(GitHubProvider.tokenEndpoint).toBe(
-      "https://github.com/login/oauth/access_token"
+      "https://github.com/login/oauth/access_token",
     );
     expect(GitHubProvider.userInfoEndpoint).toBe("https://api.github.com/user");
   });
 
   it("Google Provider 应该有正确的端点", () => {
     expect(GoogleProvider.authorizationEndpoint).toBe(
-      "https://accounts.google.com/o/oauth2/v2/auth"
+      "https://accounts.google.com/o/oauth2/v2/auth",
     );
     expect(GoogleProvider.tokenEndpoint).toBe(
-      "https://oauth2.googleapis.com/token"
+      "https://oauth2.googleapis.com/token",
     );
   });
 
   it("WeChat Provider 应该有正确的端点", () => {
     expect(WeChatProvider.authorizationEndpoint).toBe(
-      "https://open.weixin.qq.com/connect/qrconnect"
+      "https://open.weixin.qq.com/connect/qrconnect",
     );
   });
 
   it("GitLab Provider 应该有正确的端点", () => {
     expect(GitLabProvider.authorizationEndpoint).toBe(
-      "https://gitlab.com/oauth/authorize"
+      "https://gitlab.com/oauth/authorize",
     );
     expect(GitLabProvider.tokenEndpoint).toBe("https://gitlab.com/oauth/token");
   });
 
   it("Gitee Provider 应该有正确的端点", () => {
     expect(GiteeProvider.authorizationEndpoint).toBe(
-      "https://gitee.com/oauth/authorize"
+      "https://gitee.com/oauth/authorize",
     );
     expect(GiteeProvider.tokenEndpoint).toBe("https://gitee.com/oauth/token");
   });
@@ -259,7 +261,7 @@ describe("工厂函数", () => {
     const client = createGitHubClient(
       "client-id",
       "client-secret",
-      "http://localhost/callback"
+      "http://localhost/callback",
     );
 
     expect(client).toBeInstanceOf(OAuth2Client);
@@ -272,7 +274,7 @@ describe("工厂函数", () => {
     const client = createGoogleClient(
       "client-id",
       "client-secret",
-      "http://localhost/callback"
+      "http://localhost/callback",
     );
 
     expect(client).toBeInstanceOf(OAuth2Client);

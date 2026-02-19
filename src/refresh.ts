@@ -28,8 +28,9 @@
  * ```
  */
 
-import { signToken, verifyToken, decodeToken, isTokenExpired } from "./jwt.ts";
+import { decodeToken, isTokenExpired, signToken, verifyToken } from "./jwt.ts";
 import type { JWTPayload } from "./jwt.ts";
+import { $tr } from "./i18n.ts";
 
 // ============================================================================
 // 类型定义
@@ -132,7 +133,7 @@ function generateTokenId(): string {
 function parseTimeString(timeStr: string): number {
   const match = timeStr.match(/^(\d+)([smhd])$/);
   if (!match) {
-    throw new Error(`无效的时间格式: ${timeStr}`);
+    throw new Error($tr("auth.refresh.invalidTimeFormat", { timeStr }));
   }
 
   const value = parseInt(match[1], 10);
@@ -148,7 +149,7 @@ function parseTimeString(timeStr: string): number {
     case "d":
       return value * 24 * 60 * 60;
     default:
-      throw new Error(`不支持的时间单位: ${unit}`);
+      throw new Error($tr("auth.refresh.unsupportedTimeUnit", { unit }));
   }
 }
 
@@ -287,7 +288,7 @@ export class TokenManager {
    */
   async generateTokenPair(
     payload: Record<string, unknown>,
-    options: GenerateTokenOptions = {}
+    options: GenerateTokenOptions = {},
   ): Promise<TokenPair> {
     const now = Math.floor(Date.now() / 1000);
     const tokenId = generateTokenId();
@@ -301,7 +302,7 @@ export class TokenManager {
         expiresIn: this.accessTokenExpiryStr,
         issuer: this.issuer,
         audience: this.audience,
-      }
+      },
     );
 
     // 生成 Refresh Token
@@ -312,7 +313,7 @@ export class TokenManager {
         expiresIn: this.refreshTokenExpiryStr,
         issuer: this.issuer,
         audience: this.audience,
-      }
+      },
     );
 
     // 保存 Refresh Token 到存储
@@ -353,7 +354,7 @@ export class TokenManager {
    */
   async refresh(
     refreshToken: string,
-    newPayload?: Record<string, unknown>
+    newPayload?: Record<string, unknown>,
   ): Promise<TokenPair> {
     // 验证 Refresh Token
     let payload: JWTPayload;
@@ -363,29 +364,29 @@ export class TokenManager {
         audience: this.audience,
       });
     } catch {
-      throw new Error("无效的 Refresh Token");
+      throw new Error($tr("auth.refresh.invalidRefreshToken"));
     }
 
     // 检查 Token 类型
     if (payload.type !== "refresh") {
-      throw new Error("无效的 Token 类型");
+      throw new Error($tr("auth.refresh.invalidTokenType"));
     }
 
     // 获取 Token ID
     const tokenId = payload.jti as string;
     if (!tokenId) {
-      throw new Error("无效的 Refresh Token: 缺少 Token ID");
+      throw new Error($tr("auth.refresh.refreshTokenMissingId"));
     }
 
     // 从存储中获取 Token 数据
     const tokenData = await this.store.get(tokenId);
     if (!tokenData) {
-      throw new Error("Refresh Token 已过期或不存在");
+      throw new Error($tr("auth.refresh.refreshTokenExpiredOrMissing"));
     }
 
     // 检查是否已撤销
     if (tokenData.revoked) {
-      throw new Error("Refresh Token 已被撤销");
+      throw new Error($tr("auth.refresh.refreshTokenRevoked"));
     }
 
     // 删除旧的 Refresh Token
@@ -415,7 +416,7 @@ export class TokenManager {
     });
 
     if (payload.type !== "access") {
-      throw new Error("无效的 Token 类型");
+      throw new Error($tr("auth.refresh.invalidTokenType"));
     }
 
     return payload;

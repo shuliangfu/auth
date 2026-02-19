@@ -2,32 +2,34 @@
  * @fileoverview Auth 模块基础功能测试
  */
 
-import { describe, it, expect } from "@dreamer/test";
+import { describe, expect, it } from "@dreamer/test";
 import {
-  parseBearerToken,
-  parseBasicAuth,
+  type AuthUser,
   createBasicAuthHeader,
   createBearerAuthHeader,
-  parseJwt,
-  isJwtExpired,
-  validateJwtClaims,
   extractUserFromJwt,
-  hasRole,
-  hasAnyRole,
-  hasAllRoles,
-  hasPermission,
-  hasAnyPermission,
-  hasAllPermissions,
-  matchPath,
-  requiresAuth,
   getRequiredRoles,
-  type AuthUser,
+  hasAllPermissions,
+  hasAllRoles,
+  hasAnyPermission,
+  hasAnyRole,
+  hasPermission,
+  hasRole,
+  isJwtExpired,
   type JwtPayload,
+  matchPath,
+  parseBasicAuth,
+  parseBearerToken,
+  parseJwt,
+  requiresAuth,
+  validateJwtClaims,
 } from "../src/mod.ts";
 
 describe("parseBearerToken - Bearer Token 解析", () => {
   it("应该解析有效的 Bearer Token", () => {
-    const token = parseBearerToken("Bearer eyJhbGciOiJIUzI1NiJ9.test.signature");
+    const token = parseBearerToken(
+      "Bearer eyJhbGciOiJIUzI1NiJ9.test.signature",
+    );
     expect(token).toBe("eyJhbGciOiJIUzI1NiJ9.test.signature");
   });
 
@@ -265,7 +267,9 @@ describe("权限检查", () => {
     });
 
     it("应该返回 false 如果用户没有任何权限", () => {
-      expect(hasAnyPermission(user, ["admin:all", "system:config"])).toBe(false);
+      expect(hasAnyPermission(user, ["admin:all", "system:config"])).toBe(
+        false,
+      );
     });
   });
 
@@ -275,7 +279,9 @@ describe("权限检查", () => {
     });
 
     it("应该返回 false 如果用户缺少任何权限", () => {
-      expect(hasAllPermissions(user, ["users:read", "users:delete"])).toBe(false);
+      expect(hasAllPermissions(user, ["users:read", "users:delete"])).toBe(
+        false,
+      );
     });
   });
 });
@@ -307,7 +313,7 @@ describe("requiresAuth - 认证需求检查", () => {
     expect(
       requiresAuth("/public/file", {
         publicPaths: ["/public/"],
-      })
+      }),
     ).toBe(false);
   });
 
@@ -315,7 +321,7 @@ describe("requiresAuth - 认证需求检查", () => {
     expect(
       requiresAuth("/api/users", {
         protectedPaths: ["/api/"],
-      })
+      }),
     ).toBe(true);
   });
 

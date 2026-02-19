@@ -5,14 +5,14 @@
  */
 
 import {
-  signToken,
-  verifyToken,
   decodeToken,
-  isTokenExpired,
+  generateECKeyPair,
+  generateRSAKeyPair,
   getTokenExpiration,
   getTokenRemainingTime,
-  generateRSAKeyPair,
-  generateECKeyPair,
+  isTokenExpired,
+  signToken,
+  verifyToken,
 } from "../src/jwt.ts";
 
 // ============================================================================
@@ -36,7 +36,7 @@ const token = await signToken(
     expiresIn: "1h", // 1 小时后过期
     issuer: "my-app",
     audience: "my-api",
-  }
+  },
 );
 
 console.log("生成的 Token:");
@@ -106,7 +106,7 @@ const rsaToken = await signToken(
   {
     algorithm: "RS256",
     expiresIn: "24h",
-  }
+  },
 );
 
 console.log("RSA Token:");
@@ -138,7 +138,7 @@ const ecToken = await signToken(
   {
     algorithm: "ES256",
     expiresIn: "7d",
-  }
+  },
 );
 
 console.log("ECDSA Token:");

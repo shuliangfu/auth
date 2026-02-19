@@ -24,14 +24,15 @@
  */
 
 import {
-  signJWT,
-  verifyJWT,
   decodeJWT,
-  generateRSASigningKeyPair,
   generateECDSAKeyPair,
+  generateRSASigningKeyPair,
   type JWTOptions,
   type JWTPayload,
+  signJWT,
+  verifyJWT,
 } from "@dreamer/crypto";
+import { $tr } from "./i18n.ts";
 
 // ============================================================================
 // 类型定义
@@ -174,14 +175,16 @@ const MIN_SECRET_LENGTH = 32;
  */
 function validateSecretStrength(
   secret: string | CryptoKey,
-  algorithm: string
+  algorithm: string,
 ): void {
   // 只对 HMAC 算法验证字符串密钥长度
   if (typeof secret === "string" && algorithm.startsWith("HS")) {
     if (secret.length < MIN_SECRET_LENGTH) {
       throw new Error(
-        `密钥长度不足: 需要至少 ${MIN_SECRET_LENGTH} 字符，当前 ${secret.length} 字符。` +
-          "请使用更强的密钥以确保安全性。"
+        $tr("auth.jwt.secretTooShort", {
+          min: String(MIN_SECRET_LENGTH),
+          current: String(secret.length),
+        }),
       );
     }
   }
@@ -190,7 +193,7 @@ function validateSecretStrength(
 export async function signToken(
   payload: Record<string, unknown>,
   secret: string | CryptoKey,
-  options: SignTokenOptions = {}
+  options: SignTokenOptions = {},
 ): Promise<string> {
   const algorithm = options.algorithm || "HS256";
 
@@ -238,15 +241,13 @@ export async function signToken(
 export async function verifyToken(
   token: string,
   secret: string | CryptoKey,
-  options: VerifyTokenOptions = {}
+  options: VerifyTokenOptions = {},
 ): Promise<JWTPayload> {
   // 安全关键：先检查算法白名单，防止算法混淆攻击
   // 支持单个算法或算法数组
   const algorithmOption = options.algorithm;
   const allowedAlgorithms: JWTAlgorithm[] = algorithmOption
-    ? Array.isArray(algorithmOption)
-      ? algorithmOption
-      : [algorithmOption]
+    ? Array.isArray(algorithmOption) ? algorithmOption : [algorithmOption]
     : ["HS256"]; // 默认只允许 HS256
 
   const decoded = decodeJWT(token);
@@ -254,7 +255,10 @@ export async function verifyToken(
 
   if (!allowedAlgorithms.includes(tokenAlgorithm)) {
     throw new Error(
-      `JWT 算法不在允许列表中: ${tokenAlgorithm}，允许的算法: ${allowedAlgorithms.join(", ")}`
+      $tr("auth.jwt.algorithmNotAllowed", {
+        alg: tokenAlgorithm,
+        allowed: allowedAlgorithms.join(", "),
+      }),
     );
   }
 
@@ -263,12 +267,12 @@ export async function verifyToken(
 
   // 额外验证：签发者
   if (options.issuer && payload.iss !== options.issuer) {
-    throw new Error("JWT 签发者不匹配");
+    throw new Error($tr("auth.jwt.issuerMismatch"));
   }
 
   // 额外验证：受众
   if (options.audience && payload.aud !== options.audience) {
-    throw new Error("JWT 受众不匹配");
+    throw new Error($tr("auth.jwt.audienceMismatch"));
   }
 
   return payload;
@@ -328,7 +332,7 @@ export function decodeToken(token: string): DecodedToken {
  * ```
  */
 export async function generateRSAKeyPair(
-  modulusLength: number = 2048
+  modulusLength: number = 2048,
 ): Promise<KeyPair> {
   return await generateRSASigningKeyPair(modulusLength);
 }
@@ -353,7 +357,7 @@ export async function generateRSAKeyPair(
  * ```
  */
 export async function generateECKeyPair(
-  namedCurve: "P-256" | "P-384" | "P-521" = "P-256"
+  namedCurve: "P-256" | "P-384" | "P-521" = "P-256",
 ): Promise<KeyPair> {
   return await generateECDSAKeyPair(namedCurve);
 }
@@ -440,4 +444,4 @@ export function getTokenRemainingTime(token: string): number {
 }
 
 // 重新导出 crypto 库的 JWT 类型
-export type { JWTPayload, JWTOptions };
+export type { JWTOptions, JWTPayload };

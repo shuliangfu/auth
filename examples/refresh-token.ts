@@ -4,11 +4,8 @@
  * 展示 Token 刷新、撤销、黑名单等功能
  */
 
-import {
-  TokenManager,
-  MemoryTokenStore,
-} from "../src/refresh.ts";
-import { isTokenExpired, getTokenRemainingTime } from "../src/jwt.ts";
+import { MemoryTokenStore, TokenManager } from "../src/refresh.ts";
+import { getTokenRemainingTime, isTokenExpired } from "../src/jwt.ts";
 
 // ============================================================================
 // 创建 Token 管理器
@@ -46,8 +43,14 @@ console.log("Access Token:");
 console.log(tokens.accessToken.slice(0, 50) + "...");
 console.log("\nRefresh Token:");
 console.log(tokens.refreshToken.slice(0, 50) + "...");
-console.log("\nAccess Token 过期时间:", new Date(tokens.accessTokenExpiresAt * 1000).toLocaleString());
-console.log("Refresh Token 过期时间:", new Date(tokens.refreshTokenExpiresAt * 1000).toLocaleString());
+console.log(
+  "\nAccess Token 过期时间:",
+  new Date(tokens.accessTokenExpiresAt * 1000).toLocaleString(),
+);
+console.log(
+  "Refresh Token 过期时间:",
+  new Date(tokens.refreshTokenExpiresAt * 1000).toLocaleString(),
+);
 
 // ============================================================================
 // 验证 Access Token
@@ -128,7 +131,12 @@ await tokenManager.revokeAllByUser("99999");
 console.log("已撤销用户 99999 的所有 Token");
 
 // 验证所有 Token 都已失效
-for (const [name, t] of [["token1", tokens1], ["token2", tokens2], ["token3", tokens3]] as const) {
+for (
+  const [name, t] of [["token1", tokens1], ["token2", tokens2], [
+    "token3",
+    tokens3,
+  ]] as const
+) {
   try {
     await tokenManager.refresh(t.refreshToken);
     console.log(`${name}: 仍然有效`);
@@ -171,5 +179,7 @@ async function handleApiRequest(accessToken: string): Promise<void> {
 }
 
 // 生成新 Token 并测试
-const testTokens = await tokenManager.generateTokenPair({ userId: "test-user" });
+const testTokens = await tokenManager.generateTokenPair({
+  userId: "test-user",
+});
 await handleApiRequest(testTokens.accessToken);

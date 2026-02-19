@@ -36,8 +36,8 @@
 
 import type { AuthUser } from "./mod.ts";
 import type {
-  SessionStore,
   SessionData as BaseSessionData,
+  SessionStore,
 } from "@dreamer/session";
 
 // ============================================================================
@@ -337,7 +337,7 @@ export class AuthSessionManager {
    */
   middleware(): (
     ctx: HttpContext,
-    next: () => Promise<void>
+    next: () => Promise<void>,
   ) => Promise<void> {
     return async (ctx: HttpContext, next: () => Promise<void>) => {
       await this.loadSession(ctx);
@@ -361,7 +361,7 @@ export class AuthSessionManager {
    * ```
    */
   requireAuth(
-    redirectUrl?: string
+    redirectUrl?: string,
   ): (ctx: HttpContext, next: () => Promise<void>) => Promise<Response | void> {
     return async (ctx: HttpContext, next: () => Promise<void>) => {
       if (!this.isAuthenticated(ctx)) {
@@ -400,7 +400,7 @@ export class AuthSessionManager {
  * ```
  */
 export function createAuthSession(
-  options: AuthSessionOptions
+  options: AuthSessionOptions,
 ): AuthSessionManager {
   return new AuthSessionManager(options);
 }
