@@ -28,6 +28,8 @@
  * ```
  */
 
+import { $tr } from "./i18n.ts";
+
 // ============================================================================
 // 类型定义
 // ============================================================================
@@ -159,7 +161,7 @@ async function sha256(data: string): Promise<Uint8Array> {
   const encoder = new TextEncoder();
   const buffer = await globalThis.crypto.subtle.digest(
     "SHA-256",
-    encoder.encode(data)
+    encoder.encode(data),
   );
   return new Uint8Array(buffer);
 }
@@ -257,7 +259,7 @@ export class OAuth2Client {
       params.set("code_challenge", options.codeChallenge);
       params.set(
         "code_challenge_method",
-        options.codeChallengeMethod || "S256"
+        options.codeChallengeMethod || "S256",
       );
     }
 
@@ -288,7 +290,7 @@ export class OAuth2Client {
    */
   async exchangeCode(
     code: string,
-    options: ExchangeCodeOptions = {}
+    options: ExchangeCodeOptions = {},
   ): Promise<OAuth2TokenResponse> {
     const body = new URLSearchParams({
       grant_type: "authorization_code",
@@ -318,7 +320,7 @@ export class OAuth2Client {
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`Token 交换失败: ${error}`);
+      throw new Error($tr("auth.oauth.tokenExchangeFailed", { error }));
     }
 
     return await response.json();
@@ -352,7 +354,7 @@ export class OAuth2Client {
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`Token 刷新失败: ${error}`);
+      throw new Error($tr("auth.oauth.tokenRefreshFailed", { error }));
     }
 
     return await response.json();
@@ -365,10 +367,10 @@ export class OAuth2Client {
    * @returns 原始用户信息
    */
   async getUserInfoRaw(
-    accessToken: string
+    accessToken: string,
   ): Promise<Record<string, unknown>> {
     if (!this.config.userInfoEndpoint) {
-      throw new Error("未配置用户信息端点");
+      throw new Error($tr("auth.oauth.userInfoEndpointNotConfigured"));
     }
 
     const response = await fetch(this.config.userInfoEndpoint, {
@@ -380,7 +382,7 @@ export class OAuth2Client {
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`获取用户信息失败: ${error}`);
+      throw new Error($tr("auth.oauth.getUserInfoFailed", { error }));
     }
 
     return await response.json();
@@ -565,7 +567,7 @@ export function createOAuth2Client(config: OAuth2Config): OAuth2Client {
 export function createGitHubClient(
   clientId: string,
   clientSecret: string,
-  redirectUri: string
+  redirectUri: string,
 ): OAuth2Client {
   return new OAuth2Client({
     ...GitHubProvider,
@@ -586,7 +588,7 @@ export function createGitHubClient(
 export function createGoogleClient(
   clientId: string,
   clientSecret: string,
-  redirectUri: string
+  redirectUri: string,
 ): OAuth2Client {
   return new OAuth2Client({
     ...GoogleProvider,

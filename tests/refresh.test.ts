@@ -2,11 +2,11 @@
  * @fileoverview 刷新 Token 模块测试
  */
 
-import { describe, it, expect, beforeEach } from "@dreamer/test";
+import { beforeEach, describe, expect, it } from "@dreamer/test";
 import {
-  TokenManager,
-  MemoryTokenStore,
   createTokenManager,
+  MemoryTokenStore,
+  TokenManager,
 } from "../src/refresh.ts";
 
 describe("MemoryTokenStore - 内存存储", () => {

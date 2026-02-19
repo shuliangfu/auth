@@ -5,11 +5,11 @@
  */
 
 import {
-  OAuth2Client,
-  generateState,
-  generatePKCE,
   createGitHubClient,
   createGoogleClient,
+  generatePKCE,
+  generateState,
+  OAuth2Client,
 } from "../src/oauth.ts";
 
 // ============================================================================
@@ -22,7 +22,7 @@ console.log("=== GitHub OAuth2 示例 ===\n");
 const githubClient = createGitHubClient(
   "your-github-client-id",
   "your-github-client-secret",
-  "http://localhost:3000/callback"
+  "http://localhost:3000/callback",
 );
 
 // 生成授权 URL
@@ -49,7 +49,7 @@ console.log("\n=== Google OAuth2 + PKCE 示例 ===\n");
 const googleClient = createGoogleClient(
   "your-google-client-id",
   "your-google-client-secret",
-  "http://localhost:3000/google/callback"
+  "http://localhost:3000/google/callback",
 );
 
 // 生成 PKCE 参数
@@ -80,7 +80,8 @@ console.log(googleAuthUrl);
 console.log("\n=== 处理授权回调 ===\n");
 
 // 模拟回调 URL
-const callbackUrl = "http://localhost:3000/callback?code=auth_code_123&state=" + state;
+const callbackUrl = "http://localhost:3000/callback?code=auth_code_123&state=" +
+  state;
 console.log("回调 URL:", callbackUrl);
 
 // 解析回调参数

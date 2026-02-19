@@ -1,20 +1,29 @@
 # @dreamer/auth
 
-> 一个兼容 Deno 和 Bun 的用户认证库，提供完整的认证解决方案，支持 JWT、OAuth2、Session 认证和权限验证
+> A user authentication package for Deno and Bun. Full auth solution: JWT,
+> OAuth2, Session, and permission checks.
+
+**中文**: [docs/zh-CN/README.md](./docs/zh-CN/README.md) · **Test report (EN)**:
+[docs/en-US/TEST_REPORT.md](./docs/en-US/TEST_REPORT.md)
 
 [![JSR](https://jsr.io/badges/@dreamer/auth)](https://jsr.io/@dreamer/auth)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE.md)
-[![Tests](https://img.shields.io/badge/tests-123%20passed-brightgreen)](./TEST_REPORT.md)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
+[![Tests](https://img.shields.io/badge/tests-128%20passed-brightgreen)](./docs/en-US/TEST_REPORT.md)
+
+**Changelog (latest)**: [1.0.0] - 2026-02-19 — First stable release. Added: JWT,
+OAuth2, refresh tokens, Session, auth helpers, i18n. Full history:
+[English](./docs/en-US/CHANGELOG.md) | [中文](./docs/zh-CN/CHANGELOG.md)
 
 ---
 
-## 🎯 功能
+## 🎯 Features
 
-用户认证库，提供完整的认证抽象层，支持多种认证方式，用于用户登录、权限控制、API 保护等场景。
+User authentication package with a full abstraction layer, multiple auth
+methods, login, permission control, and API protection.
 
 ---
 
-## 📦 安装
+## 📦 Installation
 
 ### Deno
 
@@ -30,133 +39,133 @@ bunx jsr add @dreamer/auth
 
 ---
 
-## 🌍 环境兼容性
+## 🌍 Environment Compatibility
 
-| 环境       | 版本要求 | 状态                                                                     |
-| ---------- | -------- | ------------------------------------------------------------------------ |
-| **Deno**   | 2.5+     | ✅ 完全支持                                                              |
-| **Bun**    | 1.0+     | ✅ 完全支持                                                              |
-| **服务端** | -        | ✅ 支持（兼容 Deno 和 Bun 运行时）                                       |
-| **依赖**   | -        | 📦 @dreamer/crypto（JWT 功能）<br>📦 @dreamer/session（Session 认证，可选） |
-
----
-
-## ✨ 特性
-
-- **JWT 认证**：
-  - JWT 签名生成（支持 HS256/RS256/ES256 等多种算法）
-  - JWT 签名验证
-  - JWT 解码（不验证签名）
-  - Token 过期检查
-  - RSA/ECDSA 密钥对生成
-- **Token 解析**：
-  - Bearer Token 解析
-  - Basic Auth 解析和生成
-  - Authorization 头处理
-- **OAuth2 认证**：
-  - Authorization Code 授权码流程
-  - PKCE 扩展（推荐用于公开客户端）
-  - Token 交换和刷新
-  - 内置 Provider（GitHub、Google、微信、企业微信、钉钉、GitLab、Gitee）
-  - 用户信息解析器
-- **Token 刷新机制**：
-  - Access Token + Refresh Token 双令牌机制
-  - Token 刷新和撤销
-  - 内存存储（支持自定义存储）
-  - 自动过期管理
-- **Session 认证**：
-  - 基于 @dreamer/session 的 Session 认证
-  - 用户登录/登出
-  - Session 中间件
-  - 认证保护中间件
-- **权限验证**：
-  - 角色检查（hasRole、hasAnyRole、hasAllRoles）
-  - 权限检查（hasPermission、hasAnyPermission、hasAllPermissions）
-  - 路径匹配和路由保护
-  - 基于路径的角色配置
+| Environment      | Version | Status                                                                  |
+| ---------------- | ------- | ----------------------------------------------------------------------- |
+| **Deno**         | 2.5+    | ✅ Fully supported                                                      |
+| **Bun**          | 1.0+    | ✅ Fully supported                                                      |
+| **Server**       | -       | ✅ Supported (Deno and Bun runtimes)                                    |
+| **Dependencies** | -       | 📦 @dreamer/crypto (JWT) · 📦 @dreamer/session (Session auth, optional) |
 
 ---
 
-## 🎯 使用场景
+## ✨ Characteristics
 
-- **API 认证**：使用 JWT 保护 API 接口
-- **第三方登录**：使用 OAuth2 实现 GitHub、Google、微信登录
-- **用户会话管理**：使用 Session 管理用户登录状态
-- **权限控制**：使用角色和权限验证实现细粒度的访问控制
-- **Token 刷新**：实现无感知的 Token 自动刷新
+- **JWT authentication**:
+  - JWT signing (HS256/RS256/ES256 and more)
+  - JWT verification
+  - JWT decode (no signature verification)
+  - Token expiry check
+  - RSA/ECDSA key pair generation
+- **Token parsing**:
+  - Bearer Token parsing
+  - Basic Auth parsing and header generation
+  - Authorization header handling
+- **OAuth2 authentication**:
+  - Authorization Code flow
+  - PKCE (recommended for public clients)
+  - Token exchange and refresh
+  - Built-in providers (GitHub, Google, WeChat, WeCom, DingTalk, GitLab, Gitee)
+  - User info parsers
+- **Token refresh**:
+  - Access Token + Refresh Token
+  - Refresh and revoke
+  - In-memory store (custom store supported)
+  - Expiry handling
+- **Session authentication**:
+  - Session auth based on @dreamer/session
+  - Login / logout
+  - Session middleware
+  - Auth-protection middleware
+- **Permission checks**:
+  - Role checks (hasRole, hasAnyRole, hasAllRoles)
+  - Permission checks (hasPermission, hasAnyPermission, hasAllPermissions)
+  - Path matching and route protection
+  - Path-based role configuration
 
 ---
 
-## 🚀 快速开始
+## 🎯 Use Cases
 
-### JWT 签名和验证
+- **API auth**: Protect APIs with JWT
+- **Third-party login**: GitHub, Google, WeChat via OAuth2
+- **Session management**: Session-based login state
+- **Access control**: Role and permission checks for fine-grained control
+- **Token refresh**: Seamless access token refresh
+
+---
+
+## 🚀 Quick Start
+
+### JWT signing and verification
 
 ```typescript
-import { signToken, verifyToken, decodeToken } from "@dreamer/auth/jwt";
+import { decodeToken, signToken, verifyToken } from "@dreamer/auth/jwt";
 
-// 生成 JWT（密钥至少 32 字符）
+// Sign JWT (secret at least 32 chars)
 const token = await signToken(
   { userId: "123", username: "admin" },
   "your-secret-key-at-least-32-chars!",
   {
     expiresIn: "1h",
     issuer: "my-app",
-  }
+  },
 );
 
-// 验证 JWT
+// Verify JWT
 try {
   const payload = await verifyToken(
     token,
-    "your-secret-key-at-least-32-chars!"
+    "your-secret-key-at-least-32-chars!",
   );
   console.log(payload.userId); // "123"
 } catch (error) {
-  console.error("Token 验证失败:", error.message);
+  console.error("Token verification failed:", error.message);
 }
 
-// 解码 JWT（不验证签名）
+// Decode JWT (no signature verification)
 const decoded = decodeToken(token);
 console.log(decoded.header.alg); // "HS256"
 console.log(decoded.payload.userId); // "123"
 ```
 
-### Bearer Token 解析
+### Bearer Token parsing
 
 ```typescript
-import { parseBearerToken, parseJwt, isJwtExpired } from "@dreamer/auth";
+import { isJwtExpired, parseBearerToken, parseJwt } from "@dreamer/auth";
 
-// 从请求头解析 Token
+// Parse token from request header
 const authHeader = request.headers.get("authorization");
 const token = parseBearerToken(authHeader);
 
 if (token) {
-  // 解析 JWT payload
+  // Parse JWT payload
   const payload = parseJwt(token);
 
-  // 检查是否过期
+  // Check expiry
   if (isJwtExpired(payload)) {
-    console.log("Token 已过期");
+    console.log("Token expired");
   }
 }
 ```
 
 ---
 
-## 🎨 使用示例
+## 🎨 Examples
 
-### OAuth2 第三方登录
+### OAuth2 third-party login
 
 ```typescript
 import {
-  OAuth2Client,
-  GitHubProvider,
-  generateState,
   generatePKCE,
+  generateState,
+  GitHubProvider,
+  OAuth2Client,
   parseGitHubUser,
 } from "@dreamer/auth/oauth";
 
-// 创建 GitHub OAuth2 客户端
+// Create GitHub OAuth2 client
 const github = new OAuth2Client({
   ...GitHubProvider,
   clientId: "your-client-id",
@@ -164,7 +173,7 @@ const github = new OAuth2Client({
   redirectUri: "http://localhost:3000/callback",
 });
 
-// 生成授权 URL（带 PKCE）
+// Build authorization URL (with PKCE)
 const pkce = await generatePKCE();
 const state = generateState();
 
@@ -175,23 +184,23 @@ const authUrl = github.getAuthorizationUrl({
   codeChallengeMethod: pkce.codeChallengeMethod,
 });
 
-// 用户授权后，交换 Token
+// After user authorizes, exchange code for tokens
 const tokens = await github.exchangeCode(code, {
   codeVerifier: pkce.codeVerifier,
 });
 
-// 获取用户信息
+// Get user info
 const rawUser = await github.getUserInfoRaw(tokens.access_token);
 const user = parseGitHubUser(rawUser);
-console.log(user.username); // GitHub 用户名
+console.log(user.username); // GitHub username
 ```
 
-### Token 刷新机制
+### Token refresh
 
 ```typescript
 import { TokenManager } from "@dreamer/auth/refresh";
 
-// 创建 Token 管理器
+// Create token manager
 const tokenManager = new TokenManager({
   accessTokenSecret: "access-secret-at-least-32-chars!",
   refreshTokenSecret: "refresh-secret-at-least-32-chars",
@@ -200,42 +209,42 @@ const tokenManager = new TokenManager({
   issuer: "my-app",
 });
 
-// 登录时生成 Token 对
+// Generate token pair on login
 const tokens = await tokenManager.generateTokenPair({
   userId: "123",
   username: "admin",
   roles: ["admin"],
 });
 
-console.log(tokens.accessToken); // 短期有效的 Access Token
-console.log(tokens.refreshToken); // 长期有效的 Refresh Token
+console.log(tokens.accessToken); // Short-lived access token
+console.log(tokens.refreshToken); // Long-lived refresh token
 
-// 验证 Access Token
+// Verify access token
 const payload = await tokenManager.verifyAccessToken(tokens.accessToken);
 
-// Access Token 快过期时刷新
+// Refresh when access token is about to expire
 if (tokenManager.shouldRefresh(tokens.accessToken)) {
   const newTokens = await tokenManager.refresh(tokens.refreshToken);
-  console.log(newTokens.accessToken); // 新的 Access Token
+  console.log(newTokens.accessToken); // New access token
 }
 
-// 登出时撤销 Token
+// Revoke on logout
 await tokenManager.revoke(tokens.refreshToken);
 ```
 
-### Session 认证
+### Session authentication
 
 ```typescript
 import { createAuthSession } from "@dreamer/auth/session";
 import { MemorySessionAdapter } from "@dreamer/session";
 
-// 创建 Session 存储
+// Create session store
 const store = new MemorySessionAdapter();
 
-// 创建认证 Session 管理器
+// Create auth session manager
 const authSession = createAuthSession({
   store,
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 天
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   cookie: {
     httpOnly: true,
     secure: true,
@@ -243,33 +252,33 @@ const authSession = createAuthSession({
   },
 });
 
-// 登录
+// Login
 await authSession.login(ctx, {
   id: "123",
   username: "admin",
   roles: ["admin"],
 });
 
-// 检查是否已认证
+// Check authenticated
 if (authSession.isAuthenticated(ctx)) {
   const user = authSession.getUser(ctx);
   console.log(user?.username); // "admin"
 }
 
-// 登出
+// Logout
 await authSession.logout(ctx);
 ```
 
-### 权限验证
+### Permission checks
 
 ```typescript
 import {
-  hasRole,
-  hasAnyRole,
-  hasAllRoles,
-  hasPermission,
-  hasAnyPermission,
   hasAllPermissions,
+  hasAllRoles,
+  hasAnyPermission,
+  hasAnyRole,
+  hasPermission,
+  hasRole,
 } from "@dreamer/auth";
 
 const user = {
@@ -279,176 +288,185 @@ const user = {
   permissions: ["users:read", "users:write", "posts:read"],
 };
 
-// 角色检查
+// Role checks
 if (hasRole(user, "admin")) {
-  console.log("用户是管理员");
+  console.log("User is admin");
 }
 
 if (hasAnyRole(user, ["admin", "moderator"])) {
-  console.log("用户有管理权限");
+  console.log("User has admin or moderator role");
 }
 
 if (hasAllRoles(user, ["admin", "editor"])) {
-  console.log("用户同时是管理员和编辑");
+  console.log("User is both admin and editor");
 }
 
-// 权限检查
+// Permission checks
 if (hasPermission(user, "users:write")) {
-  console.log("用户可以写入用户数据");
+  console.log("User can write user data");
 }
 
 if (hasAnyPermission(user, ["users:read", "users:write"])) {
-  console.log("用户有用户相关权限");
+  console.log("User has user-related permissions");
 }
 
 if (hasAllPermissions(user, ["users:read", "users:write"])) {
-  console.log("用户有完整的用户读写权限");
+  console.log("User has full user read/write permissions");
 }
 ```
 
 ---
 
-## 📚 API 文档
+## 📚 API Reference
 
-### JWT 模块 (`@dreamer/auth/jwt`)
+### JWT module (`@dreamer/auth/jwt`)
 
 #### signToken
 
-生成 JWT Token。
+Generate JWT token.
 
 ```typescript
 function signToken(
   payload: Record<string, unknown>,
   secret: string | CryptoKey,
-  options?: SignTokenOptions
+  options?: SignTokenOptions,
 ): Promise<string>;
 ```
 
-**参数**：
+**Parameters**:
 
-| 参数      | 类型                     | 必填 | 说明                                  |
-| --------- | ------------------------ | ---- | ------------------------------------- |
-| payload   | `Record<string, unknown>` | ✅   | JWT 载荷                              |
-| secret    | `string \| CryptoKey`     | ✅   | 密钥（字符串至少 32 字符，或 CryptoKey） |
-| options   | `SignTokenOptions`        | ❌   | 签名选项                              |
+| Parameter | Type                      | Required | Description                                     |
+| --------- | ------------------------- | -------- | ----------------------------------------------- |
+| payload   | `Record<string, unknown>` | ✅       | JWT payload                                     |
+| secret    | `string \| CryptoKey`     | ✅       | Secret (string at least 32 chars, or CryptoKey) |
+| options   | `SignTokenOptions`        | ❌       | Sign options                                    |
 
-**SignTokenOptions**：
+**SignTokenOptions**:
 
-| 选项       | 类型           | 说明                           |
-| ---------- | -------------- | ------------------------------ |
-| algorithm  | `JwtAlgorithm` | 算法（默认 HS256）             |
-| expiresIn  | `string`       | 过期时间（如 "1h", "24h", "7d"） |
-| issuer     | `string`       | 签发者                         |
-| audience   | `string`       | 受众                           |
-| subject    | `string`       | 主题                           |
+| Option    | Type           | Description                     |
+| --------- | -------------- | ------------------------------- |
+| algorithm | `JwtAlgorithm` | Algorithm (default HS256)       |
+| expiresIn | `string`       | Expiry (e.g. "1h", "24h", "7d") |
+| issuer    | `string`       | Issuer                          |
+| audience  | `string`       | Audience                        |
+| subject   | `string`       | Subject                         |
 
 #### verifyToken
 
-验证 JWT Token。
+Verify JWT token.
 
 ```typescript
 function verifyToken(
   token: string,
   secret: string | CryptoKey,
-  options?: VerifyTokenOptions
+  options?: VerifyTokenOptions,
 ): Promise<JWTPayload>;
 ```
 
-**VerifyTokenOptions**：
+**VerifyTokenOptions**:
 
-| 选项             | 类型                            | 说明                       |
-| ---------------- | ------------------------------- | -------------------------- |
-| issuer           | `string`                        | 验证签发者                 |
-| audience         | `string`                        | 验证受众                   |
-| ignoreExpiration | `boolean`                       | 是否忽略过期检查           |
-| algorithm        | `JWTAlgorithm \| JWTAlgorithm[]` | 允许的算法白名单           |
+| Option           | Type                             | Description                 |
+| ---------------- | -------------------------------- | --------------------------- |
+| issuer           | `string`                         | Verify issuer               |
+| audience         | `string`                         | Verify audience             |
+| ignoreExpiration | `boolean`                        | Ignore expiry check         |
+| algorithm        | `JWTAlgorithm \| JWTAlgorithm[]` | Allowed algorithm whitelist |
 
-#### 其他 JWT 函数
+#### Other JWT functions
 
-| 函数                    | 说明                     |
-| ----------------------- | ------------------------ |
-| `decodeToken(token)`    | 解码 JWT（不验证签名）   |
-| `isTokenExpired(token)` | 检查 Token 是否过期      |
-| `getTokenExpiration(token)` | 获取 Token 过期时间戳 |
-| `getTokenRemainingTime(token)` | 获取 Token 剩余有效时间 |
-| `generateRSAKeyPair(modulusLength?)` | 生成 RSA 密钥对 |
-| `generateECKeyPair(namedCurve?)` | 生成 ECDSA 密钥对 |
-
----
-
-### Token 解析模块 (`@dreamer/auth`)
-
-| 函数                               | 说明                      |
-| ---------------------------------- | ------------------------- |
-| `parseBearerToken(authHeader)`     | 解析 Bearer Token         |
-| `parseBasicAuth(authHeader)`       | 解析 Basic Auth           |
-| `createBasicAuthHeader(username, password)` | 创建 Basic Auth 头 |
-| `createBearerAuthHeader(token)`    | 创建 Bearer Auth 头       |
-| `parseJwt(token)`                  | 解析 JWT payload          |
-| `isJwtExpired(payload)`            | 检查 JWT 是否过期         |
-| `validateJwtClaims(payload, config)` | 验证 JWT Claims        |
-| `extractUserFromJwt(payload)`      | 从 JWT 提取用户信息       |
+| Function                             | Description                     |
+| ------------------------------------ | ------------------------------- |
+| `decodeToken(token)`                 | Decode JWT (no signature check) |
+| `isTokenExpired(token)`              | Check if token is expired       |
+| `getTokenExpiration(token)`          | Get token expiration timestamp  |
+| `getTokenRemainingTime(token)`       | Get remaining valid time        |
+| `generateRSAKeyPair(modulusLength?)` | Generate RSA key pair           |
+| `generateECKeyPair(namedCurve?)`     | Generate ECDSA key pair         |
 
 ---
 
-### OAuth2 模块 (`@dreamer/auth/oauth`)
+### Token parsing module (`@dreamer/auth`)
+
+| Function                                    | Description               |
+| ------------------------------------------- | ------------------------- |
+| `parseBearerToken(authHeader)`              | Parse Bearer token        |
+| `parseBasicAuth(authHeader)`                | Parse Basic Auth          |
+| `createBasicAuthHeader(username, password)` | Create Basic Auth header  |
+| `createBearerAuthHeader(token)`             | Create Bearer Auth header |
+| `parseJwt(token)`                           | Parse JWT payload         |
+| `isJwtExpired(payload)`                     | Check if JWT is expired   |
+| `validateJwtClaims(payload, config)`        | Validate JWT claims       |
+| `extractUserFromJwt(payload)`               | Extract user from JWT     |
+
+---
+
+### OAuth2 module (`@dreamer/auth/oauth`)
 
 #### OAuth2Client
 
-OAuth2 客户端类。
+OAuth2 client class.
 
 ```typescript
 class OAuth2Client {
   constructor(config: OAuth2Config);
   getAuthorizationUrl(options?: AuthorizationUrlOptions): string;
-  exchangeCode(code: string, options?: ExchangeCodeOptions): Promise<OAuth2TokenResponse>;
+  exchangeCode(
+    code: string,
+    options?: ExchangeCodeOptions,
+  ): Promise<OAuth2TokenResponse>;
   refreshToken(refreshToken: string): Promise<OAuth2TokenResponse>;
   getUserInfoRaw(accessToken: string): Promise<Record<string, unknown>>;
 }
 ```
 
-#### 内置 Provider
+#### Built-in providers
 
-| Provider          | 说明           |
+| Provider           | Description     |
+| ------------------ | --------------- |
+| `GitHubProvider`   | GitHub OAuth2   |
+| `GoogleProvider`   | Google OAuth2   |
+| `WeChatProvider`   | WeChat OAuth2   |
+| `WeComProvider`    | WeCom OAuth2    |
+| `DingTalkProvider` | DingTalk OAuth2 |
+| `GitLabProvider`   | GitLab OAuth2   |
+| `GiteeProvider`    | Gitee OAuth2    |
+
+#### User info parsers
+
+| Function          | Description       |
+| ----------------- | ----------------- |
+| `parseGitHubUser` | Parse GitHub user |
+| `parseGoogleUser` | Parse Google user |
+| `parseWeChatUser` | Parse WeChat user |
+| `parseGitLabUser` | Parse GitLab user |
+| `parseGiteeUser`  | Parse Gitee user  |
+
+#### Helpers
+
+| Function          | Description    |
 | ----------------- | -------------- |
-| `GitHubProvider`  | GitHub OAuth2  |
-| `GoogleProvider`  | Google OAuth2  |
-| `WeChatProvider`  | 微信 OAuth2    |
-| `WeComProvider`   | 企业微信 OAuth2 |
-| `DingTalkProvider`| 钉钉 OAuth2    |
-| `GitLabProvider`  | GitLab OAuth2  |
-| `GiteeProvider`   | Gitee OAuth2   |
-
-#### 用户信息解析器
-
-| 函数              | 说明               |
-| ----------------- | ------------------ |
-| `parseGitHubUser` | 解析 GitHub 用户   |
-| `parseGoogleUser` | 解析 Google 用户   |
-| `parseWeChatUser` | 解析微信用户       |
-| `parseGitLabUser` | 解析 GitLab 用户   |
-| `parseGiteeUser`  | 解析 Gitee 用户    |
-
-#### 辅助函数
-
-| 函数             | 说明                |
-| ---------------- | ------------------- |
-| `generatePKCE()` | 生成 PKCE 参数      |
-| `generateState()`| 生成 state 参数     |
+| `generatePKCE()`  | Generate PKCE  |
+| `generateState()` | Generate state |
 
 ---
 
-### Token 刷新模块 (`@dreamer/auth/refresh`)
+### Token refresh module (`@dreamer/auth/refresh`)
 
 #### TokenManager
 
-Token 管理器类。
+Token manager class.
 
 ```typescript
 class TokenManager {
   constructor(options: TokenManagerOptions);
-  generateTokenPair(payload: Record<string, unknown>, options?: GenerateTokenOptions): Promise<TokenPair>;
-  refresh(refreshToken: string, newPayload?: Record<string, unknown>): Promise<TokenPair>;
+  generateTokenPair(
+    payload: Record<string, unknown>,
+    options?: GenerateTokenOptions,
+  ): Promise<TokenPair>;
+  refresh(
+    refreshToken: string,
+    newPayload?: Record<string, unknown>,
+  ): Promise<TokenPair>;
   verifyAccessToken(accessToken: string): Promise<JWTPayload>;
   revoke(refreshToken: string): Promise<void>;
   revokeAllByUser(userId: string): Promise<void>;
@@ -457,29 +475,29 @@ class TokenManager {
 }
 ```
 
-**TokenManagerOptions**：
+**TokenManagerOptions**:
 
-| 选项                | 类型                    | 说明                           |
-| ------------------- | ----------------------- | ------------------------------ |
-| accessTokenSecret   | `string \| CryptoKey`   | Access Token 密钥              |
-| refreshTokenSecret  | `string \| CryptoKey`   | Refresh Token 密钥             |
-| accessTokenExpiry   | `string`                | Access Token 过期时间（默认 15m） |
-| refreshTokenExpiry  | `string`                | Refresh Token 过期时间（默认 7d） |
-| store               | `TokenStore`            | Token 存储（默认内存存储）      |
-| issuer              | `string`                | 签发者                         |
-| audience            | `string`                | 受众                           |
+| Option             | Type                  | Description                       |
+| ------------------ | --------------------- | --------------------------------- |
+| accessTokenSecret  | `string \| CryptoKey` | Access token secret               |
+| refreshTokenSecret | `string \| CryptoKey` | Refresh token secret              |
+| accessTokenExpiry  | `string`              | Access token expiry (default 15m) |
+| refreshTokenExpiry | `string`              | Refresh token expiry (default 7d) |
+| store              | `TokenStore`          | Token store (default in-memory)   |
+| issuer             | `string`              | Issuer                            |
+| audience           | `string`              | Audience                          |
 
 #### MemoryTokenStore
 
-内存 Token 存储，实现 `TokenStore` 接口。
+In-memory token store implementing `TokenStore`.
 
 ---
 
-### Session 认证模块 (`@dreamer/auth/session`)
+### Session auth module (`@dreamer/auth/session`)
 
 #### AuthSessionManager
 
-Session 认证管理器类。
+Session auth manager class.
 
 ```typescript
 class AuthSessionManager {
@@ -490,83 +508,90 @@ class AuthSessionManager {
   getUser(ctx: HttpContext): AuthUser | null;
   loadSession(ctx: HttpContext): Promise<boolean>;
   middleware(): (ctx: HttpContext, next: () => Promise<void>) => Promise<void>;
-  requireAuth(redirectUrl?: string): (ctx: HttpContext, next: () => Promise<void>) => Promise<Response | void>;
+  requireAuth(
+    redirectUrl?: string,
+  ): (ctx: HttpContext, next: () => Promise<void>) => Promise<Response | void>;
 }
 ```
 
-**AuthSessionOptions**：
+**AuthSessionOptions**:
 
-| 选项            | 类型                                  | 说明                          |
-| --------------- | ------------------------------------- | ----------------------------- |
-| store           | `SessionStore`                        | Session 存储适配器            |
-| cookieName      | `string`                              | Cookie 名称（默认 authSessionId） |
-| maxAge          | `number`                              | Session 过期时间（毫秒，默认 24h） |
-| cookie          | `CookieOptions`                       | Cookie 选项                   |
-| serializeUser   | `(user: AuthUser) => AuthUser`        | 用户序列化函数                |
-| deserializeUser | `(user: AuthUser) => Promise<AuthUser \| null>` | 用户反序列化函数     |
-
----
-
-### 权限验证 (`@dreamer/auth`)
-
-#### 角色检查
-
-| 函数                         | 说明                   |
-| ---------------------------- | ---------------------- |
-| `hasRole(user, role)`        | 检查是否有指定角色     |
-| `hasAnyRole(user, roles)`    | 检查是否有任意角色     |
-| `hasAllRoles(user, roles)`   | 检查是否有所有角色     |
-
-#### 权限检查
-
-| 函数                                  | 说明                   |
-| ------------------------------------- | ---------------------- |
-| `hasPermission(user, permission)`     | 检查是否有指定权限     |
-| `hasAnyPermission(user, permissions)` | 检查是否有任意权限     |
-| `hasAllPermissions(user, permissions)`| 检查是否有所有权限     |
-
-#### 路径匹配
-
-| 函数                           | 说明                     |
-| ------------------------------ | ------------------------ |
-| `matchPath(path, patterns)`    | 检查路径是否匹配模式     |
-| `requiresAuth(path, options)`  | 检查路径是否需要认证     |
-| `getRequiredRoles(path, roles)`| 获取路径所需的角色       |
+| Option          | Type                                            | Description                         |
+| --------------- | ----------------------------------------------- | ----------------------------------- |
+| store           | `SessionStore`                                  | Session store adapter               |
+| cookieName      | `string`                                        | Cookie name (default authSessionId) |
+| maxAge          | `number`                                        | Session expiry in ms (default 24h)  |
+| cookie          | `CookieOptions`                                 | Cookie options                      |
+| serializeUser   | `(user: AuthUser) => AuthUser`                  | User serialization                  |
+| deserializeUser | `(user: AuthUser) => Promise<AuthUser \| null>` | User deserialization                |
 
 ---
 
-## 📊 测试报告
+### Permission checks (`@dreamer/auth`)
 
-| 指标         | Deno   | Bun    |
-| ------------ | ------ | ------ |
-| **总测试数** | 123    | 123    |
-| **通过**     | 123    | 123    |
-| **失败**     | 0      | 0      |
-| **通过率**   | 100%   | 100%   |
+#### Role checks
 
-详细测试报告请查看 [TEST_REPORT.md](./TEST_REPORT.md)。
+| Function                   | Description         |
+| -------------------------- | ------------------- |
+| `hasRole(user, role)`      | Check for one role  |
+| `hasAnyRole(user, roles)`  | Check for any role  |
+| `hasAllRoles(user, roles)` | Check for all roles |
+
+#### Permission checks
+
+| Function                               | Description               |
+| -------------------------------------- | ------------------------- |
+| `hasPermission(user, permission)`      | Check for one permission  |
+| `hasAnyPermission(user, permissions)`  | Check for any permission  |
+| `hasAllPermissions(user, permissions)` | Check for all permissions |
+
+#### Path matching
+
+| Function                        | Description                 |
+| ------------------------------- | --------------------------- |
+| `matchPath(path, patterns)`     | Match path to patterns      |
+| `requiresAuth(path, options)`   | Check if path needs auth    |
+| `getRequiredRoles(path, roles)` | Get required roles for path |
 
 ---
 
-## 📝 注意事项
+## 📊 Test Report
 
-- **密钥安全**：HMAC 算法密钥至少需要 32 字符，生产环境请使用强密钥
-- **算法白名单**：验证 JWT 时建议指定允许的算法，防止算法混淆攻击
-- **Token 存储**：生产环境 Refresh Token 应使用 Redis 等持久化存储
-- **PKCE 推荐**：OAuth2 公开客户端（如 SPA、移动应用）建议使用 PKCE
-- **Session 安全**：建议设置 `httpOnly`、`secure`、`sameSite` Cookie 选项
+| Metric        | Deno | Bun  |
+| ------------- | ---- | ---- |
+| **Total**     | 128  | 123  |
+| **Passed**    | 128  | 123  |
+| **Failed**    | 0    | 0    |
+| **Pass rate** | 100% | 100% |
 
----
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
+See [docs/en-US/TEST_REPORT.md](./docs/en-US/TEST_REPORT.md) for the full
+report.
 
 ---
 
-## 📄 许可证
+## 📝 Notes
 
-MIT License - 详见 [LICENSE.md](./LICENSE.md)
+- **Secret length**: HMAC secrets must be at least 32 characters; use strong
+  secrets in production.
+- **Algorithm whitelist**: When verifying JWT, specify allowed algorithms to
+  avoid algorithm confusion.
+- **Token storage**: Use a persistent store (e.g. Redis) for refresh tokens in
+  production.
+- **PKCE**: Use PKCE for OAuth2 public clients (e.g. SPA, mobile).
+- **Session cookies**: Prefer `httpOnly`, `secure`, and `sameSite` cookie
+  options.
+
+---
+
+## 🤝 Contributing
+
+Issues and Pull Requests are welcome.
+
+---
+
+## 📄 License
+
+Apache License 2.0 — see [LICENSE](./LICENSE).
 
 ---
 

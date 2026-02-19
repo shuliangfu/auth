@@ -5,13 +5,13 @@
  */
 
 import {
-  hasRole,
-  hasAnyRole,
-  hasAllRoles,
-  hasPermission,
-  hasAnyPermission,
-  hasAllPermissions,
   type AuthUser,
+  hasAllPermissions,
+  hasAllRoles,
+  hasAnyPermission,
+  hasAnyRole,
+  hasPermission,
+  hasRole,
 } from "../src/mod.ts";
 
 // ============================================================================
@@ -64,12 +64,24 @@ console.log("  是否有 user 角色:", hasRole(normalUser, "user"));
 console.log("\n=== 多角色检查 ===\n");
 
 // 是否拥有任意一个角色
-console.log("Admin 是否有 admin 或 moderator:", hasAnyRole(adminUser, ["admin", "moderator"]));
-console.log("Guest 是否有 admin 或 moderator:", hasAnyRole(guestUser, ["admin", "moderator"]));
+console.log(
+  "Admin 是否有 admin 或 moderator:",
+  hasAnyRole(adminUser, ["admin", "moderator"]),
+);
+console.log(
+  "Guest 是否有 admin 或 moderator:",
+  hasAnyRole(guestUser, ["admin", "moderator"]),
+);
 
 // 是否拥有所有角色
-console.log("\nAdmin 是否同时有 admin 和 user:", hasAllRoles(adminUser, ["admin", "user"]));
-console.log("Admin 是否同时有 admin 和 super:", hasAllRoles(adminUser, ["admin", "super"]));
+console.log(
+  "\nAdmin 是否同时有 admin 和 user:",
+  hasAllRoles(adminUser, ["admin", "user"]),
+);
+console.log(
+  "Admin 是否同时有 admin 和 super:",
+  hasAllRoles(adminUser, ["admin", "super"]),
+);
 
 // ============================================================================
 // 权限检查
@@ -98,13 +110,28 @@ console.log("  user:write:", hasPermission(guestUser, "user:write"));
 console.log("\n=== 多权限检查 ===\n");
 
 // 任意一个权限
-console.log("Admin 有读或删除权限:", hasAnyPermission(adminUser, ["user:read", "user:delete"]));
-console.log("Guest 有读或删除权限:", hasAnyPermission(guestUser, ["user:read", "user:delete"]));
-console.log("Guest 有写或删除权限:", hasAnyPermission(guestUser, ["user:write", "user:delete"]));
+console.log(
+  "Admin 有读或删除权限:",
+  hasAnyPermission(adminUser, ["user:read", "user:delete"]),
+);
+console.log(
+  "Guest 有读或删除权限:",
+  hasAnyPermission(guestUser, ["user:read", "user:delete"]),
+);
+console.log(
+  "Guest 有写或删除权限:",
+  hasAnyPermission(guestUser, ["user:write", "user:delete"]),
+);
 
 // 所有权限
-console.log("\nAdmin 同时有读和写权限:", hasAllPermissions(adminUser, ["user:read", "user:write"]));
-console.log("Normal 同时有读、写、删除权限:", hasAllPermissions(normalUser, ["user:read", "user:write", "user:delete"]));
+console.log(
+  "\nAdmin 同时有读和写权限:",
+  hasAllPermissions(adminUser, ["user:read", "user:write"]),
+);
+console.log(
+  "Normal 同时有读、写、删除权限:",
+  hasAllPermissions(normalUser, ["user:read", "user:write", "user:delete"]),
+);
 
 // ============================================================================
 // 认证守卫函数
@@ -135,7 +162,10 @@ function createRoleGuard(requiredRoles: string[], requireAll = false) {
  * @param requireAll - 是否需要所有权限
  * @returns 守卫函数
  */
-function createPermissionGuard(requiredPermissions: string[], requireAll = false) {
+function createPermissionGuard(
+  requiredPermissions: string[],
+  requireAll = false,
+) {
   return (user: AuthUser | null): boolean => {
     if (!user) return false;
     return requireAll
@@ -206,7 +236,9 @@ function handleUserAction(user: AuthUser | null, action: string): void {
       if (hasRole(user, "admin") && hasPermission(user, "user:delete")) {
         console.log(`[${action}] ${user.username} 可以删除用户`);
       } else {
-        console.log(`[${action}] ${user.username} 没有删除权限（需要 admin 角色）`);
+        console.log(
+          `[${action}] ${user.username} 没有删除权限（需要 admin 角色）`,
+        );
       }
       break;
 

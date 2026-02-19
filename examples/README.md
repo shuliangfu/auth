@@ -1,16 +1,16 @@
 # @dreamer/auth 示例
 
-本目录包含 `@dreamer/auth` 库的使用示例。
+本目录包含 `@dreamer/auth` 包的使用示例。
 
 ## 示例列表
 
-| 文件 | 说明 |
-|------|------|
-| [jwt.ts](./jwt.ts) | JWT 签名、验证、解码，支持 HS256/RS256/ES256 |
-| [session.ts](./session.ts) | Session 会话管理：登录、登出、持久化 |
-| [oauth.ts](./oauth.ts) | OAuth2 认证流程：GitHub、Google、微信 |
-| [permission.ts](./permission.ts) | 权限验证：角色、权限检查 |
-| [refresh-token.ts](./refresh-token.ts) | Token 刷新机制：刷新、撤销、黑名单 |
+| 文件                                   | 说明                                         |
+| -------------------------------------- | -------------------------------------------- |
+| [jwt.ts](./jwt.ts)                     | JWT 签名、验证、解码，支持 HS256/RS256/ES256 |
+| [session.ts](./session.ts)             | Session 会话管理：登录、登出、持久化         |
+| [oauth.ts](./oauth.ts)                 | OAuth2 认证流程：GitHub、Google、微信        |
+| [permission.ts](./permission.ts)       | 权限验证：角色、权限检查                     |
+| [refresh-token.ts](./refresh-token.ts) | Token 刷新机制：刷新、撤销、黑名单           |
 
 ## 运行示例
 

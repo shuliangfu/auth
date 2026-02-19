@@ -1,0 +1,25 @@
+{
+  "auth": {
+    "jwt": {
+      "secretTooShort": "Secret length insufficient: at least {min} characters required, current {current}. Please use a stronger secret for security.",
+      "algorithmNotAllowed": "JWT algorithm not in allow list: {alg}, allowed: {allowed}",
+      "issuerMismatch": "JWT issuer mismatch",
+      "audienceMismatch": "JWT audience mismatch"
+    },
+    "refresh": {
+      "invalidTimeFormat": "Invalid time format: {timeStr}",
+      "unsupportedTimeUnit": "Unsupported time unit: {unit}",
+      "invalidRefreshToken": "Invalid Refresh Token",
+      "invalidTokenType": "Invalid token type",
+      "refreshTokenMissingId": "Invalid Refresh Token: missing Token ID",
+      "refreshTokenExpiredOrMissing": "Refresh Token expired or not found",
+      "refreshTokenRevoked": "Refresh Token has been revoked"
+    },
+    "oauth": {
+      "tokenExchangeFailed": "Token exchange failed: {error}",
+      "tokenRefreshFailed": "Token refresh failed: {error}",
+      "userInfoEndpointNotConfigured": "User info endpoint not configured",
+      "getUserInfoFailed": "Failed to get user info: {error}"
+    }
+  }
+}
