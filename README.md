@@ -10,8 +10,8 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 [![Tests](https://img.shields.io/badge/tests-128%20passed-brightgreen)](./docs/en-US/TEST_REPORT.md)
 
-**Changelog (latest)**: [1.0.0] - 2026-02-19 — First stable release. Added: JWT,
-OAuth2, refresh tokens, Session, auth helpers, i18n. Full history:
+**Changelog (latest)**: [1.0.1] - 2026-02-20 — Dependencies: @dreamer/crypto
+^1.0.2, @dreamer/test ^1.0.12. Full history:
 [English](./docs/en-US/CHANGELOG.md) | [中文](./docs/zh-CN/CHANGELOG.md)
 
 ---
