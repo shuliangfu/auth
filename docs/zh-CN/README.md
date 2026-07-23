@@ -1,18 +1,26 @@
 # @dreamer/auth
 
-> 一个兼容 Deno 和 Bun 的用户认证包，提供完整的认证解决方案，支持
-> JWT、OAuth2、Session 认证和权限验证
+> 一个兼容 Deno、Bun 和 Node.js 22+ 的用户认证库，提供完整的认证解决方案，
+> 支持 JWT、OAuth2、Session 认证和权限验证
 
-**English**: [README](../../README.md) · **Test report (EN)**:
+📖 **文档**：[English](../../README.md) · **测试报告 (EN)**：
 [en-US/TEST_REPORT.md](../en-US/TEST_REPORT.md)
 
 [![JSR](https://jsr.io/badges/@dreamer/auth)](https://jsr.io/@dreamer/auth)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../../LICENSE)
-[![Tests](https://img.shields.io/badge/tests-123%20passed-brightgreen)](./TEST_REPORT.md)
+[![Tests: 123 passed (3 runtimes)](https://img.shields.io/badge/Tests-123%20passed%20%7C%203%20runtimes-brightgreen)](./TEST_REPORT.md)
 
-**变更日志（最新）**：[1.0.0] - 2026-02-19 —
-首个稳定版。新增：JWT、OAuth2、刷新令牌、Session、认证辅助、i18n。完整历史：[English](../en-US/CHANGELOG.md)
-| [中文](./CHANGELOG.md)
+---
+
+## 📋 变更日志
+
+完整历史：[English](../en-US/CHANGELOG.md) | [中文](./CHANGELOG.md)。
+
+**最新（v1.1.0 - 2026-07-23）**：**新增** – Node.js 22+ 兼容。
+**变更** – JWT 测试锁定 `zh-CN` locale（同时锁定 `@dreamer/crypto` 与 auth i18n，
+CI locale 安全）；移除 `deno.ns`/`deno.window` 编译 lib；依赖升级
+（`@dreamer/crypto` ^1.1.0、`@dreamer/session` ^1.1.0、
+`@dreamer/runtime-adapter` ^1.2.2）。详见 [CHANGELOG](./CHANGELOG.md)。
 
 ---
 
@@ -37,16 +45,22 @@ deno add jsr:@dreamer/auth
 bunx jsr add @dreamer/auth
 ```
 
+### Node.js 22+
+
+```bash
+npx jsr add @dreamer/auth
+```
+
 ---
 
-## 🌍 环境兼容性
+## 🌍 运行时兼容性
 
-| 环境       | 版本要求 | 状态                                                                        |
-| ---------- | -------- | --------------------------------------------------------------------------- |
-| **Deno**   | 2.5+     | ✅ 完全支持                                                                 |
-| **Bun**    | 1.0+     | ✅ 完全支持                                                                 |
-| **服务端** | -        | ✅ 支持（兼容 Deno 和 Bun 运行时）                                          |
-| **依赖**   | -        | 📦 @dreamer/crypto（JWT 功能）<br>📦 @dreamer/session（Session 认证，可选） |
+| 运行时      | 版本要求 | 状态                                                                        |
+| ----------- | -------- | --------------------------------------------------------------------------- |
+| **Deno**    | 2.9+     | ✅ 完全支持                                                                 |
+| **Bun**     | 1.3+     | ✅ 完全支持                                                                 |
+| **Node.js** | 22+      | ✅ 完全支持                                                                 |
+| **依赖**    | -        | 📦 @dreamer/crypto（JWT 功能）<br>📦 @dreamer/session（Session 认证，可选） |
 
 ---
 
@@ -557,14 +571,15 @@ class AuthSessionManager {
 
 ## 📊 测试报告
 
-| 指标         | Deno | Bun  |
-| ------------ | ---- | ---- |
-| **总测试数** | 123  | 123  |
-| **通过**     | 123  | 123  |
-| **失败**     | 0    | 0    |
-| **通过率**   | 100% | 100% |
+| 指标         | Deno | Bun  | Node.js |
+| ------------ | ---- | ---- | ------- |
+| **总测试数** | 128  | 123  | 123     |
+| **通过**     | 128  | 123  | 123     |
+| **失败**     | 0    | 0    | 0       |
+| **通过率**   | 100% | 100% | 100%    |
 
-详细测试报告请查看 [TEST_REPORT.md](./TEST_REPORT.md)。
+> Deno 在 123 个单元测试之上额外计入 5 个生命周期钩子；Bun 与 Node.js 报告
+> 123 个单元测试。详细测试报告请查看 [TEST_REPORT.md](./TEST_REPORT.md)。
 
 ---
 

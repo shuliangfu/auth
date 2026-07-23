@@ -1,18 +1,29 @@
 # @dreamer/auth
 
-> A user authentication package for Deno and Bun. Full auth solution: JWT,
-> OAuth2, Session, and permission checks.
+> A user authentication library compatible with Deno, Bun, and Node.js 22+.
+> Full auth solution: JWT, OAuth2, Session, and permission checks.
 
-**中文**: [docs/zh-CN/README.md](./docs/zh-CN/README.md) · **Test report (EN)**:
+📖 **Docs**: English (this README) |
+[中文 (Chinese)](./docs/zh-CN/README.md) · **Test report (EN)**:
 [docs/en-US/TEST_REPORT.md](./docs/en-US/TEST_REPORT.md)
 
 [![JSR](https://jsr.io/badges/@dreamer/auth)](https://jsr.io/@dreamer/auth)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
-[![Tests](https://img.shields.io/badge/tests-128%20passed-brightgreen)](./docs/en-US/TEST_REPORT.md)
+[![Tests: 123 passed (3 runtimes)](https://img.shields.io/badge/Tests-123%20passed%20%7C%203%20runtimes-brightgreen)](./docs/en-US/TEST_REPORT.md)
 
-**Changelog (latest)**: [1.0.1] - 2026-02-20 — Dependencies: @dreamer/crypto
-^1.0.2, @dreamer/test ^1.0.12. Full history:
-[English](./docs/en-US/CHANGELOG.md) | [中文](./docs/zh-CN/CHANGELOG.md)
+---
+
+## 📋 Changelog
+
+See [en-US](./docs/en-US/CHANGELOG.md) | [zh-CN](./docs/zh-CN/CHANGELOG.md) for
+full history.
+
+**Latest (v1.1.0 - 2026-07-23)**: **Added** – Node.js 22+ compatibility.
+**Changed** – JWT tests lock `zh-CN` locale for both `@dreamer/crypto` and auth
+i18n (CI locale-safe); removed `deno.ns`/`deno.window` compiler libs;
+dependency bumps (`@dreamer/crypto` ^1.1.0, `@dreamer/session` ^1.1.0,
+`@dreamer/runtime-adapter` ^1.2.2). See
+[CHANGELOG](./docs/en-US/CHANGELOG.md).
 
 ---
 
@@ -37,16 +48,22 @@ deno add jsr:@dreamer/auth
 bunx jsr add @dreamer/auth
 ```
 
+### Node.js 22+
+
+```bash
+npx jsr add @dreamer/auth
+```
+
 ---
 
-## 🌍 Environment Compatibility
+## 🌍 Runtime Compatibility
 
-| Environment      | Version | Status                                                                  |
-| ---------------- | ------- | ----------------------------------------------------------------------- |
-| **Deno**         | 2.5+    | ✅ Fully supported                                                      |
-| **Bun**          | 1.0+    | ✅ Fully supported                                                      |
-| **Server**       | -       | ✅ Supported (Deno and Bun runtimes)                                    |
-| **Dependencies** | -       | 📦 @dreamer/crypto (JWT) · 📦 @dreamer/session (Session auth, optional) |
+| Runtime     | Version | Status                                                                  |
+| ----------- | ------- | ----------------------------------------------------------------------- |
+| **Deno**    | 2.9+    | ✅ Full support                                                         |
+| **Bun**     | 1.3+    | ✅ Full support                                                         |
+| **Node.js** | 22+     | ✅ Full support                                                         |
+| **Dependencies** | -  | 📦 @dreamer/crypto (JWT) · 📦 @dreamer/session (Session auth, optional) |
 
 ---
 
@@ -557,15 +574,16 @@ class AuthSessionManager {
 
 ## 📊 Test Report
 
-| Metric        | Deno | Bun  |
-| ------------- | ---- | ---- |
-| **Total**     | 128  | 123  |
-| **Passed**    | 128  | 123  |
-| **Failed**    | 0    | 0    |
-| **Pass rate** | 100% | 100% |
+| Metric        | Deno | Bun  | Node.js |
+| ------------- | ---- | ---- | ------- |
+| **Total**     | 128  | 123  | 123     |
+| **Passed**    | 128  | 123  | 123     |
+| **Failed**    | 0    | 0    | 0       |
+| **Pass rate** | 100% | 100% | 100%    |
 
-See [docs/en-US/TEST_REPORT.md](./docs/en-US/TEST_REPORT.md) for the full
-report.
+> Deno counts lifecycle hooks (5) on top of the 123 unit tests; Bun and Node.js
+> report 123 unit tests. See [docs/en-US/TEST_REPORT.md](./docs/en-US/TEST_REPORT.md)
+> for the full report.
 
 ---
 

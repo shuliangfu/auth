@@ -3,6 +3,7 @@
  */
 
 import { describe, expect, it } from "@dreamer/test";
+import { setCryptoLocale } from "@dreamer/crypto";
 import {
   decodeToken,
   generateECKeyPair,
@@ -13,6 +14,14 @@ import {
   signToken,
   verifyToken,
 } from "../src/jwt.ts";
+import { setAuthLocale } from "../src/i18n.ts";
+
+// 【Why】锁定中文 locale：本文件断言依赖 $tr 错误文案——"过期"来自 @dreamer/crypto
+// 的 verifyJWT（crypto i18n）、"无效的 JWT Token 格式"来自 crypto 的 decodeJWT、
+// "签发者不匹配"来自 auth 自身 $tr。CI 英文 locale 下两者均返回英文致中文断言失败，
+// 故模块级锁定 zh-CN 复现本地中文环境行为。
+setCryptoLocale("zh-CN");
+setAuthLocale("zh-CN");
 
 describe("signToken - JWT 签名", () => {
   it("应该使用 HS256 签名 JWT", async () => {

@@ -1,0 +1,33 @@
+{
+  "name": "@dreamer/auth",
+  "version": "1.1.0",
+  "description": "User authentication (JWT, OAuth2, Session, permissions) for Deno, Bun, and Node.js 22+.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": "./src/mod.ts",
+    "./jwt": "./src/jwt.ts",
+    "./session": "./src/session.ts",
+    "./oauth": "./src/oauth.ts",
+    "./refresh": "./src/refresh.ts"
+  },
+  "scripts": {
+    "test": "bun test tests/",
+    "test:node": "tsx --tsconfig tsconfig.json --test --test-force-exit tests/*.test.ts",
+    "check": "deno check src/mod.ts"
+  },
+  "dependencies": {
+    "@dreamer/crypto": "npm:@jsr/dreamer__crypto@^1.1.0",
+    "@dreamer/i18n": "npm:@jsr/dreamer__i18n@^1.1.2",
+    "@dreamer/runtime-adapter": "npm:@jsr/dreamer__runtime-adapter@^1.2.2",
+    "@dreamer/session": "npm:@jsr/dreamer__session@^1.1.0"
+  },
+  "devDependencies": {
+    "@dreamer/test": "npm:@jsr/dreamer__test@^1.2.3",
+    "tsx": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": ["auth", "jwt", "oauth", "dreamer"]
+}

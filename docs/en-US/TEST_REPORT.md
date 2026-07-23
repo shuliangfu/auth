@@ -2,14 +2,14 @@
 
 ## 📊 Test Overview
 
-| Item                | Value                     |
-| ------------------- | ------------------------- |
-| **Package version** | `@dreamer/auth@1.0.0`     |
-| **Crypto package**  | `@dreamer/crypto@^1.0.1`  |
-| **Session package** | `@dreamer/session@^1.0.3` |
-| **Test framework**  | `@dreamer/test@^1.0.11`   |
-| **Test date**       | `2026-02-19`              |
-| **Environment**     | Deno 2.5+, Bun 1.3+       |
+| Item                | Value                              |
+| ------------------- | ---------------------------------- |
+| **Package version** | `@dreamer/auth@1.1.0`             |
+| **Crypto package**  | `@dreamer/crypto@^1.1.0`          |
+| **Session package** | `@dreamer/session@^1.1.0`         |
+| **Test framework**  | `@dreamer/test@^1.2.3`            |
+| **Test date**       | `2026-07-23`                       |
+| **Environment**     | Deno 2.9+, Bun 1.3+, Node.js 22+  |
 
 ---
 
@@ -17,13 +17,17 @@
 
 ### Overall Statistics
 
-| Metric             | Deno | Bun   |
-| ------------------ | ---- | ----- |
-| **Total tests**    | 128  | 123   |
-| **Passed**         | 128  | 123   |
-| **Failed**         | 0    | 0     |
-| **Pass rate**      | 100% | 100%  |
-| **Execution time** | ~6s  | ~4.6s |
+| Metric             | Deno | Bun   | Node.js |
+| ------------------ | ---- | ----- | ------- |
+| **Total tests**    | 128  | 123   | 123     |
+| **Passed**         | 128  | 123   | 123     |
+| **Failed**         | 0    | 0     | 0       |
+| **Pass rate**      | 100% | 100%  | 100%    |
+| **Execution time** | ~6s  | ~4.6s | ~5s     |
+
+> Deno counts 5 additional lifecycle hooks (`describe` `afterAll` + `@dreamer/test`
+> cleanup) on top of the 123 unit tests; Bun and Node.js report 123 unit tests
+> each.
 
 ### Test File Statistics
 
@@ -477,17 +481,17 @@
    logout, auth check.
 5. **Permission checks**: Role and permission checks; path matching and auth
    requirement config.
-6. **Cross-runtime**: Compatible with Deno and Bun.
+6. **Cross-runtime**: Compatible with Deno 2.9+, Bun 1.3+, and Node.js 22+.
 
 ---
 
 ## 📝 Conclusion
 
-All 123 tests of @dreamer/auth pass. Coverage includes JWT signing/verification,
-OAuth 2.0 client, Token refresh, auth session management, and permission checks.
-The package provides a complete auth solution with multiple auth methods and
-OAuth providers, and cross-platform compatibility is verified with both Deno and
-Bun.
+All 123 unit tests of @dreamer/auth pass on Deno 2.9+, Bun 1.3+, and Node.js
+22+. Coverage includes JWT signing/verification, OAuth 2.0 client, Token
+refresh, auth session management, and permission checks. The package provides a
+complete auth solution with multiple auth methods and OAuth providers, and
+cross-platform compatibility is verified across all three runtimes.
 
 ---
 
@@ -495,6 +499,6 @@ Bun.
 
 **Pass rate: 100%** ✅
 
-_123 tests total | Deno pass | Bun pass_
+_123 unit tests | Deno 128 (incl. lifecycle) | Bun 123 | Node.js 123_
 
 </div>
